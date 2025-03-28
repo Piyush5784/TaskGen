@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 type FormWrapperProps = {
   title: string;
@@ -28,7 +28,7 @@ const formVariants = {
 const FormWrapper = ({ title, description, children }: FormWrapperProps) => {
   return (
     <motion.div
-      className="flex flex-col gap-5"
+      className="flex flex-col gap-5 "
       variants={formVariants}
       initial="hidden"
       animate="visible"

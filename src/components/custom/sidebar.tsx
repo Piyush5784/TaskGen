@@ -2,13 +2,6 @@
 
 import {
   ArrowUpCircleIcon,
-  BarChartIcon,
-  CameraIcon,
-  ClipboardListIcon,
-  DatabaseIcon,
-  FileCodeIcon,
-  FileIcon,
-  FileTextIcon,
   FolderIcon,
   HelpCircleIcon,
   LayoutDashboardIcon,
@@ -29,10 +22,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useSession } from "next-auth/react";
+import CheckOrganisationStatus from "./check-org";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
 import { NavUser } from "./nav-user";
-import { SelectOrg } from "./select-organisation-dialog";
 
 const data = {
   user: {
@@ -43,111 +36,35 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: LayoutDashboardIcon,
     },
     {
       title: "Projects",
-      url: "#",
+      url: "/dashboard/projects",
       icon: FolderIcon,
     },
     {
-      title: "Organisations",
-      url: "#",
+      title: "Tasks",
+      url: "/dashboard/tasks",
       icon: ListIcon,
     },
     {
-      title: "Analytics",
-      url: "#",
-      icon: BarChartIcon,
-    },
-
-    {
       title: "Team",
-      url: "#",
+      url: "/dashboard/team",
       icon: UsersIcon,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: CameraIcon,
-      isActive: true,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Proposal",
-      icon: FileTextIcon,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Prompts",
-      icon: FileCodeIcon,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
     },
   ],
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/dashboard/settings",
       icon: SettingsIcon,
     },
     {
       title: "Get Help",
-      url: "#",
+      url: "/dashboard/get-help",
       icon: HelpCircleIcon,
-    },
-    // {
-    //   title: "Search",
-    //   url: "#",
-    //   icon: SearchIcon,
-    // },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: DatabaseIcon,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: ClipboardListIcon,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: FileIcon,
     },
   ],
 };
@@ -163,20 +80,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <div>
                 <ArrowUpCircleIcon className="h-5 w-5" />
                 <span className="text-base font-semibold">
-                  {status === "authenticated" ? "Acme Inc." : <Loader />}
+                  {status === "authenticated" ? (
+                    <CheckOrganisationStatus />
+                  ) : (
+                    <Loader />
+                  )}
                 </span>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <SelectOrg />
         <NavMain items={data.navMain} />
-        {/* <NavDocuments items={data.documents} /> */}
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

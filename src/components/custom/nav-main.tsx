@@ -1,6 +1,4 @@
-"use client";
-
-import { MailIcon, PlusCircleIcon, type LucideIcon } from "lucide-react";
+import { MailIcon, type LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +9,8 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { QuickCreate } from "./quick-create-dialog";
+import Link from "next/link";
+import SidebarLink from "./sidebar-link";
 
 export function NavMain({
   items,
@@ -28,24 +28,20 @@ export function NavMain({
           <SidebarMenuItem className="flex items-center gap-2">
             <QuickCreate />
             <Button
+              asChild
               size="icon"
               className="h-9 w-9 shrink-0 group-data-[collapsible=icon]:opacity-0"
               variant="outline"
             >
-              <MailIcon />
-              <span className="sr-only">Inbox</span>
+              <Link href={"/dashboard/notifications"}>
+                <MailIcon />
+                <span className="sr-only">Inbox</span>
+              </Link>
             </Button>
           </SidebarMenuItem>
         </SidebarMenu>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton tooltip={item.title}>
-                {item.icon && <item.icon />}
-                <span>{item.title}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          <SidebarLink items={items} />
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

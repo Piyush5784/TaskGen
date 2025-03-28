@@ -2,13 +2,16 @@
 
 import { Button } from "@/components/ui/button";
 import { useMultiplestepForm } from "@/hooks/useMultiplestepForm";
+import { RootState } from "@/store";
+import axios from "axios";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { toast } from "sonner";
 import SideBar from "./SideBar";
 import SuccessMessage from "./SuccessMessage";
-import UserInfoForm from "./UserInfoForm";
-import TeamInfoForm from "./team-info-form";
 import Summary from "./Summary";
+import ProjectInfoForm from "./project-info-form";
 
 export type FormItems = {
   projectName: string;
@@ -31,6 +34,7 @@ const initialValues: FormItems = {
 export default function MultiStepForm() {
   const [formData, setFormData] = useState(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const { selectedOrg } = useSelector((root: RootState) => root.org);
 
   const {
     previousStep,
@@ -40,18 +44,59 @@ export default function MultiStepForm() {
     isLastStep,
     goTo,
     showSuccessMsg,
-  } = useMultiplestepForm(3); // Updated to 3 steps
+  } = useMultiplestepForm(2); // Updated to 3 steps
 
   function updateForm(fieldToUpdate: Partial<FormItems>) {
     setFormData((prev) => ({ ...prev, ...fieldToUpdate }));
   }
 
-  const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (Object.values(errors).some((error) => error)) {
+
+    // Validate required fields
+    const newErrors: Record<string, string> = {};
+    if (!formData.projectName || !formData.description)
+      return toast.warning("Project name and description is required.");
+    // if (!formData.email) return (newErrors.email = "Email is required.");
+    // if (!formData.description)
+    //   return (newErrors.description = "Description is required.");
+    // if (formData.noOfPeoples <= 0)
+    //   return (newErrors.noOfPeoples =
+    //     "Number of people must be greater than 0.");
+
+    setErrors(newErrors);
+
+    // If there are errors, do not proceed
+    if (Object.keys(newErrors).length > 0) {
       return;
     }
-    nextStep();
+
+    const promise = () =>
+      new Promise(async (resolve, reject) => {
+        try {
+          const res = await axios.post("/api/projects", {
+            ...formData,
+            orgId: selectedOrg?.id,
+          });
+          if (!res.data.success) {
+            reject({ message: res.data.message });
+          } else {
+            resolve({ message: res.data.message });
+          }
+        } catch (error) {
+          reject({
+            message: "Failed to create Project. Something went wrong!",
+          });
+        }
+      });
+
+    toast.promise(promise, {
+      loading: "Create project.....",
+      success: (data: any) => {
+        return data.message;
+      },
+      error: (err) => err,
+    });
   };
 
   return (
@@ -78,22 +123,22 @@ export default function MultiStepForm() {
           >
             <AnimatePresence mode="wait">
               {currentStepIndex === 0 && (
-                <UserInfoForm
+                <ProjectInfoForm
                   key="step1"
                   {...formData}
                   updateForm={updateForm}
                   errors={errors}
                 />
               )}
-              {currentStepIndex === 1 && (
+              {/* {currentStepIndex === 1 && (
                 <TeamInfoForm
                   key="step2"
                   {...formData}
                   updateForm={updateForm}
                   errors={errors}
                 />
-              )}
-              {currentStepIndex === 2 && <Summary key="step3" {...formData} />}
+              )} */}
+              {currentStepIndex === 1 && <Summary key="step2" {...formData} />}
             </AnimatePresence>
             <div className="w-full items-center flex justify-between">
               <Button
@@ -108,12 +153,21 @@ export default function MultiStepForm() {
               >
                 Go Back
               </Button>
-              <Button
-                type="submit"
-                className="relative text-neutral-200 bg-neutral-900 border border-black/20 shadow-black/10 rounded-xl hover:bg-muted"
-              >
-                {isLastStep ? "Confirm" : "Next Step"}
-              </Button>
+              {isLastStep ? (
+                <Button
+                  type="submit"
+                  className="relative text-neutral-200 bg-neutral-900 border border-black/20 shadow-black/10 rounded-xl hover:bg-muted"
+                >
+                  Submit
+                </Button>
+              ) : (
+                <button
+                  onClick={nextStep}
+                  className="relative text-neutral-200 bg-neutral-900 border border-black/20 shadow-black/10 rounded-xl hover:bg-muted inline-flex items-center justify-center gap-2 whitespace-nowrap p-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+                >
+                  Next Step
+                </button>
+              )}
             </div>
           </form>
         )}

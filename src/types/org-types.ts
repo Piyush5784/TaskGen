@@ -19,3 +19,5 @@ export const organisationSchema = z.object({
     z.string().optional(),
   ]),
 });
+
+export type Organisation = z.infer<typeof organisationSchema>;

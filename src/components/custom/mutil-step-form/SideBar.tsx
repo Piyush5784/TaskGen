@@ -7,7 +7,7 @@ type NavProps = {
 
 const steps = [
   { label: "Project Info", color: "#ffe666" },
-  { label: "Team Info", color: "#bd284d" },
+  // { label: "Team Info", color: "#bd284d" },
   { label: "Summary", color: "#6fe79f" },
 ];
 

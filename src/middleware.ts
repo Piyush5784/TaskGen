@@ -10,7 +10,9 @@ export async function middleware(req: NextRequest) {
   );
 
   if (isRestrictedRoute && !token) {
-    return NextResponse.redirect(`/login`);
+    const url = req.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.rewrite(url);
   }
 
   return NextResponse.next();
