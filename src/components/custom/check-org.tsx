@@ -13,6 +13,7 @@ import {
   fetchAllOrganisations,
   fetchOrgDetails,
   fetchProjects,
+  updateOrganisation,
 } from "@/store/slices/organisation/org-functions";
 import { selectOrganization } from "@/store/slices/organisation/org-slice";
 import { PlusIcon } from "lucide-react";
@@ -29,12 +30,12 @@ const CheckOrganisationStatus = () => {
 
   const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(fetchAllOrganisations()).unwrap();
-    };
-    fetchData();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await dispatch(fetchAllOrganisations()).unwrap();
+  //   };
+  //   fetchData();
+  // }, [dispatch]);
 
   useEffect(() => {
     if (!loading && organisations !== null && organisations.length === 0) {
@@ -49,6 +50,7 @@ const CheckOrganisationStatus = () => {
       );
       if (selectedOrgDetails) {
         dispatch(selectOrganization(selectedOrgDetails));
+        updateOrganisation(selectedOrgId);
       }
       dispatch(fetchOrgDetails(selectedOrgId));
       dispatch(fetchProjects(selectedOrgId));

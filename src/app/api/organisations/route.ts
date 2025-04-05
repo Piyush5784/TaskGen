@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     const { success, message, user } = await getUser();
 
-    if (!user || !success) {
+    if (!user || !success || !user.email) {
       return NextResponse.json({ message, success });
     }
     const body = await req.json();
@@ -53,6 +53,15 @@ export async function POST(req: NextRequest) {
         user: {
           connect: { id: user.id },
         },
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        email: user.email,
+      },
+      data: {
+        selectedOrg: organisation.id,
       },
     });
 

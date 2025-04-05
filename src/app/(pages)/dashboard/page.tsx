@@ -1,10 +1,8 @@
 "use client";
 
-import { AppDispatch, RootState } from "@/store";
-import { selectProject } from "@/store/slices/organisation/org-slice";
-import { Projects } from "@prisma/client";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Skeleton } from "@/components/ui/skeleton";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export default function Page() {
   const { projects, loading } = useSelector((root: RootState) => root.org);
@@ -12,18 +10,15 @@ export default function Page() {
   if (!projects && !loading) return null;
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 lg:px-6">
         {[...Array(3)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-gray-100 p-6 rounded-lg shadow animate-pulse"
-          >
-            <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-5/6 mb-6"></div>
+          <div key={i} className="p-6 rounded-lg shadow border">
+            <Skeleton className="h-6 w-3/4 mb-4" />
+            <Skeleton className="h-4 w-full mb-2" />
+            <Skeleton className="h-4 w-5/6 mb-6" />
             <div className="flex space-x-4">
-              <div className="h-10 bg-gray-200 rounded w-24"></div>
-              <div className="h-10 bg-gray-200 rounded w-24"></div>
+              <Skeleton className="h-10 w-24" />
+              <Skeleton className="h-10 w-24" />
             </div>
           </div>
         ))}

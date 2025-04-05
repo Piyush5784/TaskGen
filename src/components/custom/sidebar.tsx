@@ -2,6 +2,7 @@
 
 import {
   ArrowUpCircleIcon,
+  BellIcon,
   FolderIcon,
   HelpCircleIcon,
   LayoutDashboardIcon,
@@ -21,11 +22,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import {
+  fetchAllOrganisations,
+  fetchSelectedOrganisation,
+} from "@/store/slices/organisation/org-functions";
 import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
 import CheckOrganisationStatus from "./check-org";
 import { NavMain } from "./nav-main";
 import { NavSecondary } from "./nav-secondary";
 import { NavUser } from "./nav-user";
+import { AppDispatch } from "@/store";
 
 const data = {
   user: {
@@ -57,6 +64,11 @@ const data = {
   ],
   navSecondary: [
     {
+      title: "Notifications",
+      url: "/dashboard/notifications",
+      icon: BellIcon,
+    },
+    {
       title: "Settings",
       url: "/dashboard/settings",
       icon: SettingsIcon,
@@ -70,7 +82,16 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { data: user, status } = useSession();
+  const { status, data: user } = useSession();
+  const dispatch = useDispatch<AppDispatch>();
+  React.useEffect(() => {
+    const fetchData = async () => {
+      await dispatch(fetchAllOrganisations());
+      await dispatch(fetchSelectedOrganisation());
+    };
+    fetchData();
+  }, [dispatch]);
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -99,7 +120,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user?.user} />
       </SidebarFooter>
     </Sidebar>
   );

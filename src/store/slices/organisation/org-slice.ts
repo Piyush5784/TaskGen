@@ -4,6 +4,7 @@ import {
   fetchAllOrganisations,
   fetchOrgDetails,
   fetchProjects,
+  fetchSelectedOrganisation,
   fetchTasks,
 } from "./org-functions";
 
@@ -33,12 +34,12 @@ const orgSlice = createSlice({
   reducers: {
     selectOrganization: (state, action: PayloadAction<Organisations>) => {
       state.selectedOrg = action.payload;
-      // state.projects = [];
-      // state.tasks = [];
+      state.projects = [];
+      state.tasks = [];
     },
     selectProject: (state, action: PayloadAction<Projects>) => {
       state.selectedProject = action.payload;
-      // state.tasks = [];
+      state.tasks = [];
     },
   },
   extraReducers: (builder) => {
@@ -61,6 +62,32 @@ const orgSlice = createSlice({
       .addCase(fetchAllOrganisations.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to load organisations";
+      })
+
+      // Fetch selected organisation
+      .addCase(fetchSelectedOrganisation.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        fetchSelectedOrganisation.fulfilled,
+        (
+          state,
+          action: PayloadAction<{
+            success: boolean;
+            data: Organisations;
+            projects: Projects[];
+          }>
+        ) => {
+          state.loading = false;
+          state.selectedOrg = action.payload.data || null;
+          state.projects = action.payload.projects || [];
+        }
+      )
+      .addCase(fetchSelectedOrganisation.rejected, (state, action) => {
+        state.loading = false;
+        state.error =
+          action.error.message || "Failed to load selected organisation";
       })
 
       // Fetch organisation details

@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
     }
     const body = await req.json();
 
-    const { projectName, description, projectId } = body;
-    if (!description || !projectName || !projectId) {
+    const { projectName, description, orgId } = body;
+    if (!description || !projectName || !orgId) {
       return NextResponse.json({
         message: "Invalid data",
         success: false,
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         name: projectName,
         description,
         organisation: {
-          connect: { id: projectId },
+          connect: { id: orgId },
         },
         user: {
           connect: { email: user.email },

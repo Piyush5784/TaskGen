@@ -20,7 +20,7 @@ const Page = () => {
             if (!res.data?.success) {
               reject(res.data.message);
             } else {
-              resolve(res.data); // Resolve with the full data object
+              resolve(res.data.message); // Resolve with the full data object
             }
           })
           .catch((error) => reject("Something went wrong"));

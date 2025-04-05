@@ -1,13 +1,9 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import HeroSection from "@/components/custom/hero-section";
 
 export default function Home() {
   return (
     <>
-      <div>Home</div>
-      <Button asChild>
-        <Link href={"/dashboard"}>Dashbaord</Link>
-      </Button>
+      <HeroSection />
     </>
   );
 }

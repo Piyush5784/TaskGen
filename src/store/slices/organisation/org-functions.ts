@@ -9,6 +9,13 @@ export const fetchAllOrganisations = createAsyncThunk(
   }
 );
 
+export const fetchSelectedOrganisation = createAsyncThunk(
+  "org/fetchSelectedOrganisation",
+  async () => {
+    const response = await axios.get("/api/organisations/selectedOrg");
+    return response.data;
+  }
+);
 export const fetchOrgDetails = createAsyncThunk(
   "org/fetchOrgDetails",
   async (orgId: string) => {
@@ -32,3 +39,7 @@ export const fetchTasks = createAsyncThunk(
     return response.data;
   }
 );
+
+export async function updateOrganisation(id: String) {
+  await axios.post("/api/organisations/selectedOrg", { id });
+}

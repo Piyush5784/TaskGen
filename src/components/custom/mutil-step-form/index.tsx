@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { useMultiplestepForm } from "@/hooks/useMultiplestepForm";
-import { RootState } from "@/store";
+import { AppDispatch, RootState } from "@/store";
+import { fetchProjects } from "@/store/slices/organisation/org-functions";
 import axios from "axios";
 import { AnimatePresence } from "motion/react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import SideBar from "./SideBar";
 import SuccessMessage from "./SuccessMessage";
@@ -35,7 +36,7 @@ export default function MultiStepForm() {
   const [formData, setFormData] = useState(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const { selectedOrg } = useSelector((root: RootState) => root.org);
-
+  const dispath = useDispatch<AppDispatch>();
   const {
     previousStep,
     nextStep,
@@ -93,6 +94,7 @@ export default function MultiStepForm() {
     toast.promise(promise, {
       loading: "Create project.....",
       success: (data: any) => {
+        dispath(fetchProjects(selectedOrg?.id ?? ""));
         return data.message;
       },
       error: (err) => err,
@@ -119,7 +121,7 @@ export default function MultiStepForm() {
         ) : (
           <form
             onSubmit={handleOnSubmit}
-            className="w-full flex flex-col justify-between h-full"
+            className="w-full flex flex-col justify-between h-full border-3"
           >
             <AnimatePresence mode="wait">
               {currentStepIndex === 0 && (
