@@ -47,3 +47,46 @@ export async function GET(req: NextRequest) {
     });
   }
 }
+// id          String          @id @default(auto()) @map("_id") @db.ObjectId
+// name        String
+// description String?
+// sectionType String?
+// status      Status
+// reviewer    String?
+// projectId   String          @db.ObjectId
+// project     Projects        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+// userId      String          @db.ObjectId
+// user        User
+
+export async function POST(req: NextRequest) {
+  try {
+    const { success, message, user } = await getUser();
+
+    if (!user || !success) {
+      return NextResponse.json({ message, success });
+    }
+
+    const {
+      name,
+      description,
+      sectionType,
+      status,
+      reviewer,
+      projectId,
+      project,
+      orgId,
+    } = await req.json();
+
+    console.log(req.body);
+    return NextResponse.json({
+      message: "Tasks successfully created",
+      data: [],
+      success: "false",
+    });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Something went wrong! can't create new Tasks now",
+      success: false,
+    });
+  }
+}

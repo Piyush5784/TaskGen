@@ -1,24 +1,16 @@
 "use client";
 
 import { DataTable } from "@/components/custom/data-table";
+import CreateTaskForm from "@/components/custom/tasks/create-task-form";
+import SelectProject from "@/components/custom/tasks/select-project";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import * as React from "react";
 
 const Tasks = () => {
@@ -69,84 +61,28 @@ const Tasks = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">Tasks</h1>
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button>Create Task</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[425px]">
-            <DialogHeader>
-              <DialogTitle>Create New Task</DialogTitle>
-            </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-2">
-                <Label htmlFor="header" className="text-right">
-                  Title
-                </Label>
-                <Input
-                  id="header"
-                  className="col-span-3"
-                  value={newTask.header}
-                  onChange={(e) =>
-                    setNewTask({ ...newTask, header: e.target.value })
-                  }
-                  placeholder={`Task ${tasks.length + 1}`}
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-2">
-                <Label htmlFor="type" className="text-right">
-                  Type
-                </Label>
-                <Select
-                  value={newTask.type}
-                  onValueChange={(value) =>
-                    setNewTask({ ...newTask, type: value })
-                  }
-                >
-                  <SelectTrigger className="col-span-3">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Design">Design</SelectItem>
-                    <SelectItem value="Development">Development</SelectItem>
-                    <SelectItem value="New">New</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-2">
-                <Label htmlFor="target" className="text-right">
-                  Target
-                </Label>
-                <Input
-                  id="target"
-                  className="col-span-3"
-                  value={newTask.target}
-                  onChange={(e) =>
-                    setNewTask({ ...newTask, target: e.target.value })
-                  }
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-2">
-                <Label htmlFor="limit" className="text-right">
-                  Limit
-                </Label>
-                <Input
-                  id="limit"
-                  className="col-span-3"
-                  value={newTask.limit}
-                  onChange={(e) =>
-                    setNewTask({ ...newTask, limit: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button onClick={handleAddTask}>Create</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+        <h1 className="text-xl font-bold pl-8">Tasks</h1>
+
+        <div>
+          <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+              <Button variant={"outline"}>Create Task</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[500px]">
+              <DialogHeader className="flex items-start">
+                <DialogTitle>Create New Task</DialogTitle>
+                <div className="pt-4 text-xs text-start flex gap-2 flex-col text-muted-foreground">
+                  <SelectProject />
+                  Select the correct project
+                </div>
+              </DialogHeader>
+
+              <CreateTaskForm />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
       <DataTable data={tasks} />
     </div>

@@ -17,7 +17,10 @@ const SidebarLink = ({ items }: SidebarLinkProps) => {
   return (
     <>
       {items.map((item) => (
-        <SidebarMenuItem key={item.title}>
+        <SidebarMenuItem
+          key={item.title}
+          className="hover:bg-white/10  rounded-md"
+        >
           <SidebarMenuButton asChild tooltip={item.title}>
             <Link
               href={item.url}
