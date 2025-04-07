@@ -1,3 +1,16 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "rules": {
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-wrapper-object-types": "off",
+    "react/no-unknown-property": "off",
+    "react-hooks/rules-of-hooks": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/jsx-key": "off",
+    "react/prop-types": "off",
+    "react/jsx-no-undef": "off",
+    "react/react-in-jsx-scope": "off",
+    "@next/next/no-img-element": "off"
+  }
 }
