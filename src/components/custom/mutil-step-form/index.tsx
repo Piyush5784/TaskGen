@@ -13,15 +13,7 @@ import SideBar from "./SideBar";
 import SuccessMessage from "./SuccessMessage";
 import Summary from "./Summary";
 import ProjectInfoForm from "./project-info-form";
-
-export type FormItems = {
-  projectName: string;
-  email: string;
-  description: string;
-  noOfPeoples: number;
-  userEmails: string[];
-  sendEmails: boolean;
-};
+import { FormItems } from "@/types/Form-types";
 
 const initialValues: FormItems = {
   projectName: "",

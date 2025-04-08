@@ -1,7 +1,7 @@
 import { prisma } from "@/db/prisma";
 import { organisationSchema } from "@/types/org-types";
+import { getUser } from "@/utils/getUser";
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "../user/route";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,13 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import FormWrapper from "./FormWrapper";
 import { Separator } from "@/components/ui/separator";
-import { FormItems } from "@/app/page";
-
-type StepProps = FormItems & {
-  goTo: (index: number) => void;
-};
+import { FormItems, StepProps } from "@/types/Form-types";
+import FormWrapper from "./FormWrapper";
 
 const FinalStep = ({ yearly, plan, addOns, goTo }: StepProps) => {
   let planPrice = 0;

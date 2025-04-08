@@ -1,5 +1,5 @@
-import { getUser } from "@/app/api/user/route";
 import { prisma } from "@/db/prisma";
+import { getUser } from "@/utils/getUser";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

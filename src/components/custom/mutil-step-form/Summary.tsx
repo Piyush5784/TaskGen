@@ -1,4 +1,4 @@
-import { FormItems } from ".";
+import { FormItems } from "@/types/Form-types";
 import FormWrapper from "./FormWrapper";
 
 type SummaryProps = FormItems;

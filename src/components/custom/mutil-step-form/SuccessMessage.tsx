@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { RefreshCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
 // import successIcon from "../public/assets/success.png";
 
 const successVariants = {
@@ -27,13 +28,13 @@ const SuccessMessage = () => {
       initial="hidden"
       animate="visible"
     >
-      <Image
+      {/* <Image
         src={successIcon}
         width="150"
         height="150"
         alt="Success Icon"
         className="md:mb-4"
-      />
+      /> */}
       <h4 className="text-2xl font-semibold text-white md:text-3xl">
         Thank you!
       </h4>

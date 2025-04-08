@@ -4,8 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
-import { FormItems } from ".";
 import FormWrapper from "./FormWrapper";
+import { FormItems } from "@/types/Form-types";
 
 type StepProps = FormItems & {
   updateForm: (fieldToUpdate: Partial<FormItems>) => void;

@@ -1,6 +1,7 @@
 import { prisma } from "@/db/prisma";
+import { getUser } from "@/utils/getUser";
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "../../user/route";
+// import { getUser } from "../../user/route";
 
 export async function GET(req: NextRequest) {
   try {
