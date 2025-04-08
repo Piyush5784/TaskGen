@@ -53,7 +53,7 @@ export default function Page() {
 
           <div className="flex flex-wrap gap-2 mb-4">
             {project.techStack && project.techStack.length > 0 ? (
-              project.techStack.map((tech, i) => (
+              project.techStack.map((tech: any, i: number) => (
                 <span
                   key={i}
                   className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded"
