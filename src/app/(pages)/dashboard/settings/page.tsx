@@ -14,11 +14,14 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("general");
+
+  const session = useSession();
 
   const { setTheme } = useTheme();
 
@@ -44,7 +47,7 @@ const SettingsPage = () => {
                     className={cn(
                       "px-4 py-3 text-left text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-lg",
                       activeTab === item.id &&
-                        "bg-accent text-accent-foreground"
+                      "bg-accent text-accent-foreground"
                     )}
                   >
                     {item.label}
@@ -72,14 +75,15 @@ const SettingsPage = () => {
                   <div className="grid gap-4">
                     <div className="grid gap-2">
                       <Label htmlFor="username">Username</Label>
-                      <Input id="username" placeholder="Enter your username" />
+                      <Input id="username" placeholder="Enter your username" value={session.data?.user?.name || ""} disabled />
                     </div>
                     <div className="grid gap-2">
-                      <Label htmlFor="email">Email Address</Label>
+                      <Label htmlFor="email" >Email Address</Label>
                       <Input
                         id="email"
                         placeholder="email@example.com"
                         type="email"
+                        value={session.data?.user?.email || ""} disabled
                       />
                     </div>
                   </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { QuickCreate } from "@/components/custom/quick-create-dialog";
 import { AppDispatch, RootState } from "@/store";
 import { fetchTasks } from "@/store/slices/organisation/org-functions";
 import { selectProject } from "@/store/slices/organisation/org-slice";
@@ -53,6 +54,9 @@ export default function Page() {
         <p className="text-gray-500 mt-2">
           Create a new project to get started
         </p>
+        <div className="w-full flex items-center justify-center p-10">
+          <div><QuickCreate /></div>
+        </div>
       </div>
     );
   }

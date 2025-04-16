@@ -23,14 +23,14 @@ const Login = () => {
           <Button
             variant="default"
             className="bg-white text-black hover:bg-gray-200 mb-4"
-            onClick={() => signIn("google")}
+            onClick={() => signIn("google", { redirect: true })}
           >
             Login with Google
           </Button>
           <Button
             variant="default"
             className="bg-white text-black hover:bg-gray-200"
-            onClick={() => signIn("github")}
+            onClick={() => signIn("github", { redirect: true })}
           >
             Login with Github
           </Button>

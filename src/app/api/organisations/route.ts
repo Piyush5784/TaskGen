@@ -1,4 +1,5 @@
-import { prisma } from "@/db/prisma";
+
+import prisma from "@/db/prisma";
 import { organisationSchema } from "@/types/org-types";
 import { getUser } from "@/utils/getUser";
 import { NextRequest, NextResponse } from "next/server";
@@ -56,6 +57,16 @@ export async function POST(req: NextRequest) {
       },
     });
 
+    await prisma.team.create({
+      data: {
+        role: "Admin",
+        email: user.email,
+        organisation: {
+          connect: { id: organisation.id },
+        },
+      },
+    });
+
     await prisma.user.update({
       where: {
         email: user.email,
@@ -88,9 +99,10 @@ export async function GET(req: NextRequest) {
 
     const organisations = await prisma.organisations.findMany({
       where: {
-        user: {
-          email: user.email,
-        },
+        OR: [
+          { user: { email: user.email } },
+          { team: { some: { email: user.email as string } } },
+        ],
       },
     });
 

@@ -10,7 +10,7 @@ export async function getUser() {
     return { success: false, message: "You must be logged in.", user: null };
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email: session.user?.email,
     },

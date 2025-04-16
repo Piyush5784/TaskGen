@@ -41,7 +41,7 @@ const CheckOrganisationStatus = () => {
     if (!loading && organisations !== null && organisations.length === 0) {
       router.push("/create-org");
     }
-  }, [loading, organisations]);
+  }, [loading]);
 
   useEffect(() => {
     if (selectedOrgId) {

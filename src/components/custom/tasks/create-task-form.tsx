@@ -47,7 +47,6 @@ const formSchema = z.object({
     .max(200)
     .optional(),
   status: z.enum(statuses),
-  sectionType: z.enum(sectionTypes),
   reviewer: z.string().optional(),
   Type: z.enum(taskTypes),
 });
@@ -59,8 +58,17 @@ export default function CreateTaskForm() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const res = await axios.post("/api/tasks", values);
-      console.log(res);
+      const promise = axios.post("/api/tasks", values);
+
+      toast.promise(promise, {
+        loading: 'Loading...',
+        success: (response: any) => {
+          return `${response.data.message}`;
+        },
+        error: 'Error',
+      });
+
+      const res = await promise;
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
@@ -184,7 +192,7 @@ export default function CreateTaskForm() {
             )}
           />
         </div>
-        <Button type="submit">Create</Button>
+        <Button type="submit" onClick={() => console.log("click")}>Create</Button>
       </form>
     </Form>
   );
