@@ -14,13 +14,18 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
+import { RootState } from "@/store";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("general");
 
+  const { organisations, loading, selectedOrg, projects, tasks } = useSelector(
+    (state: RootState) => state.org
+  );
   const session = useSession();
 
   const { setTheme } = useTheme();
@@ -169,6 +174,8 @@ const SettingsPage = () => {
           {/* Organization Settings */}
           {activeTab === "organization" && (
             <Card>
+
+
               <CardHeader>
                 <CardTitle>Organization Settings</CardTitle>
                 <CardDescription>
