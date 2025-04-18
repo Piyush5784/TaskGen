@@ -53,6 +53,9 @@ const Tasks = () => {
     console.log("called")
   }, [formattedTasks, selectedProject]);
 
+  function closeDialog() {
+    setOpen(false);
+  }
 
 
   return (
@@ -85,7 +88,7 @@ const Tasks = () => {
                     </div>
                   </DialogHeader>
 
-                  <CreateTaskForm selectedProject={selectedProject} />
+                  <CreateTaskForm onClose={closeDialog} selectedProject={selectedProject} />
                 </>
               )}
             </DialogContent>

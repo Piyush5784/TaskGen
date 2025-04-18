@@ -98,10 +98,10 @@ export async function POST(req: NextRequest) {
    const created =  await prisma.tasks.create({
       data:{
         name,
-        status,
+        status:fixStatus,
         description,
         projectId,
-        typeOfUpdate:fixStatus,
+        typeOfUpdate:Type,
         reviewer,
         userId:user.id
       }

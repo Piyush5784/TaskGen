@@ -1,4 +1,4 @@
-"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -17,19 +17,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { AppDispatch } from "@/store";
+import { fetchTasks } from "@/store/slices/organisation/org-functions";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Projects } from "@prisma/client";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import * as z from "zod";
 
-const sectionTypes = [
-  "design",
-  "development",
-  "bug fix",
-  "improvement",
-] as const;
 const statuses = ["Done", "Completed", "In Progress", "Closed"] as const;
 const taskTypes = [
   "Design",
@@ -38,6 +35,8 @@ const taskTypes = [
   "Bug",
   "Enhancement",
 ] as const;
+
+
 
 const formSchema = z.object({
   name: z.string().min(1).min(3).max(50),
@@ -53,10 +52,12 @@ const formSchema = z.object({
 });
 
 
-export default function CreateTaskForm({ selectedProject }: { selectedProject: Projects | null }) {
+export default function CreateTaskForm({ selectedProject, onClose }: { selectedProject: Projects | null, onClose: () => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
+
+  const dispatch = useDispatch<AppDispatch>()
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
@@ -66,6 +67,8 @@ export default function CreateTaskForm({ selectedProject }: { selectedProject: P
       toast.promise(promise, {
         loading: "Loading...",
         success: (response: any) => {
+          onClose();
+          dispatch(fetchTasks(selectedProject?.id))
           return `${response.data.message}`;
         },
         error: "Error",
