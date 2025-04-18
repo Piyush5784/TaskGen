@@ -27,13 +27,6 @@ const Login = () => {
           >
             Login with Google
           </Button>
-          <Button
-            variant="default"
-            className="bg-white text-black hover:bg-gray-200"
-            onClick={() => signIn("github", { redirect: true })}
-          >
-            Login with Github
-          </Button>
         </CardContent>
       </Card>
     </div>
