@@ -40,29 +40,10 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    if(tasks.length == 0){
-      return NextResponse.json({
-        message: "Tasks details successfully fetched" ,
-        data: [],
-        success: true,
-      })
-    }
-
-    const formatTasks = tasks.map((task) => 
-      ({
-      id:task.id,
-      header:task.name,
-      status:task.status,
-      reviewer:task.reviewer,
-      type:task.typeOfUpdate,
-      // description:task.description 
-    })
-  )
-
-
+  
     return NextResponse.json({
       message: "Tasks details successfully fetched" ,
-      data: formatTasks,
+      data: tasks || [],
       success: true,
     });
   } catch (error) {
@@ -91,7 +72,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message, success });
     }
 
-    let {
+    const {
       name,
       description,
       Type,
@@ -113,15 +94,14 @@ export async function POST(req: NextRequest) {
         success:false
       })
     }
-    if(status == "In Progress") status = "InProgress"
-
+    const fixStatus = status == "In Progress" ? "InProgress" : status; 
    const created =  await prisma.tasks.create({
       data:{
         name,
         status,
         description,
         projectId,
-        typeOfUpdate:Type,
+        typeOfUpdate:fixStatus,
         reviewer,
         userId:user.id
       }

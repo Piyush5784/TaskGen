@@ -40,7 +40,7 @@ const SelectProject = () => {
   return (
     <div>
       {" "}
-      <div className="flex flex-col items-start p-6 gap-4 ">
+      <div className="flex flex-col items-start p-3 pl-0 gap-4 ">
         <Select
           onValueChange={(value) => setSelectedProjectId(value)}
           value={selectedProject?.id || undefined}

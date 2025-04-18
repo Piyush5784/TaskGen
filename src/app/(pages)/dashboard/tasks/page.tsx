@@ -2,6 +2,7 @@
 
 import { DataTable } from "@/components/custom/data-table";
 import CreateTaskForm from "@/components/custom/tasks/create-task-form";
+import ManualTaskTable from "@/components/custom/tasks/manual-task-table";
 import SelectProject from "@/components/custom/tasks/select-project";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,11 +27,6 @@ const Tasks = () => {
     (root: RootState) => root.org,
   );
 
-
-  const [initialTasks, setTasks] = React.useState(tasks);
-  console.log(initialTasks)
-  console.log(tasks)
-
   React.useEffect(() => {
     async function fetch() {
       if (selectedProject && !loading) {
@@ -39,12 +35,30 @@ const Tasks = () => {
     }
     fetch();
   }, [selectedProject]);
+  const formattedTasks = React.useMemo(() => {
+    return tasks?.map((task) => ({
+      id: task.id,
+      header: task.name,
+      status: String(task.status),
+      reviewer: String(task.reviewer),
+      type: String(task.typeOfUpdate),
+    })) ?? [];
+  }, [tasks, selectedProject]);
+  const [initialTasks, setTasks] = React.useState<typeof formattedTasks | []>([]);
+
+
+  React.useEffect(() => {
+    setTasks(formattedTasks);
+
+    console.log("called")
+  }, [formattedTasks, selectedProject]);
+
 
 
   return (
     <div className="p-4 w-full">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold pl-8">Tasks</h1>
+        <h1 className="text-xl font-bold ">Tasks</h1>
 
         <div>
           <Dialog open={open} onOpenChange={setOpen}>
@@ -79,8 +93,7 @@ const Tasks = () => {
         </div>
       </div>
       <SelectProject />
-      {/* @ts-ignore */}
-      {selectedProject && !loading && <DataTable data={initialTasks} />}
+      {selectedProject && <ManualTaskTable isLoading={loading} tasks={initialTasks} />}
     </div>
   );
 };

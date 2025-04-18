@@ -99,10 +99,9 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
-import SelectProject from "./tasks/select-project";
 
 export const schema = z.object({
-  id: z.number(),
+  id: z.string(),
   header: z.string(),
   type: z.string(),
   status: z.string(),
@@ -112,7 +111,7 @@ export const schema = z.object({
 });
 
 // Create a separate component for the drag handle
-function DragHandle({ id }: { id: number }) {
+function DragHandle({ id }: { id: string }) {
   const { attributes, listeners } = useSortable({
     id,
   });
