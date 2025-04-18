@@ -25,7 +25,7 @@ const CheckOrganisationStatus = () => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const { organisations, loading, selectedOrg, projects, tasks } = useSelector(
-    (state: RootState) => state.org
+    (state: RootState) => state.org,
   );
 
   const [selectedOrgId, setSelectedOrgId] = useState<string | null>(null);
@@ -46,7 +46,7 @@ const CheckOrganisationStatus = () => {
   useEffect(() => {
     if (selectedOrgId) {
       const selectedOrgDetails = organisations?.find(
-        (org) => org.id === selectedOrgId
+        (org) => org.id === selectedOrgId,
       );
       if (selectedOrgDetails) {
         dispatch(selectOrganization(selectedOrgDetails));

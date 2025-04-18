@@ -181,7 +181,7 @@ const CreateOrgForm = ({ onSubmit, open, setOpen }: CreateOrgFormProps) => {
                   [newCountry || countryName, stateName || ""],
                   {
                     shouldValidate: true,
-                  }
+                  },
                 );
               }}
               // onStateChange={(state) => {

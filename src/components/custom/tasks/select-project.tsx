@@ -13,12 +13,13 @@ import {
 import { PlusIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { QuickCreate } from "../quick-create-dialog";
 
 const SelectProject = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [projectId, setSelectedProjectId] = useState<string | null>(null);
   const { selectedProject, projects, loading } = useSelector(
-    (root: RootState) => root.org
+    (root: RootState) => root.org,
   );
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const SelectProject = () => {
   return (
     <div>
       {" "}
-      <div className="flex flex-col items-center gap-4 ">
+      <div className="flex flex-col items-start p-6 gap-4 ">
         <Select
           onValueChange={(value) => setSelectedProjectId(value)}
           value={selectedProject?.id || undefined}
@@ -58,13 +59,7 @@ const SelectProject = () => {
                 </SelectItem>
               ))}
             </SelectGroup>
-            <Button
-              variant={"secondary"}
-              className="w-full mt-1 flex items-center gap-2"
-            >
-              <PlusIcon size={16} />
-              Create Project
-            </Button>
+            <QuickCreate type="secondary" />
           </SelectContent>
         </Select>
       </div>

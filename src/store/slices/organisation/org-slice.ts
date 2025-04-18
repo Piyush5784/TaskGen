@@ -53,11 +53,11 @@ const orgSlice = createSlice({
         fetchAllOrganisations.fulfilled,
         (
           state,
-          action: PayloadAction<{ success: boolean; data: Organisations[] }>
+          action: PayloadAction<{ success: boolean; data: Organisations[] }>,
         ) => {
           state.loading = false;
           state.organisations = action.payload.data || [];
-        }
+        },
       )
       .addCase(fetchAllOrganisations.rejected, (state, action) => {
         state.loading = false;
@@ -77,12 +77,12 @@ const orgSlice = createSlice({
             success: boolean;
             data: Organisations;
             projects: Projects[];
-          }>
+          }>,
         ) => {
           state.loading = false;
           state.selectedOrg = action.payload.data || null;
           state.projects = action.payload.projects || [];
-        }
+        },
       )
       .addCase(fetchSelectedOrganisation.rejected, (state, action) => {
         state.loading = false;
@@ -101,9 +101,9 @@ const orgSlice = createSlice({
           const updatedOrg = action.payload;
           state.organisations =
             state.organisations?.map((org) =>
-              org.id === updatedOrg.id ? updatedOrg : org
+              org.id === updatedOrg.id ? updatedOrg : org,
             ) || [];
-        }
+        },
       )
       .addCase(fetchOrgDetails.rejected, (state, action) => {
         state.loading = false;
@@ -119,27 +119,25 @@ const orgSlice = createSlice({
         fetchProjects.fulfilled,
         (
           state,
-          action: PayloadAction<{ success: boolean; data: Projects[] }>
+          action: PayloadAction<{ success: boolean; data: Projects[] }>,
         ) => {
           state.loading = false;
           state.projects = action.payload.data || [];
-        }
+        },
       )
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || "Failed to load projects";
       })
-
-      // Fetch tasks
       .addCase(fetchTasks.pending, (state) => {
         state.loading = true;
       })
       .addCase(
         fetchTasks.fulfilled,
-        (state, action: PayloadAction<Tasks[]>) => {
+        (state, action: PayloadAction<{success:boolean; data:Tasks[]}>) => {
           state.loading = false;
-          state.tasks = action.payload;
-        }
+          state.tasks = action.payload.data;
+        },
       )
       .addCase(fetchTasks.rejected, (state, action) => {
         state.loading = false;

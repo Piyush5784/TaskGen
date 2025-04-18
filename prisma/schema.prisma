@@ -66,21 +66,29 @@ model Projects {
 }
 
 model Tasks {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String?
-  sectionType String?
-  status      Status
-  reviewer    String?
-  projectId   String   @db.ObjectId
-  project     Projects @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  userId      String   @db.ObjectId
-  user        User     @relation(fields: [userId], references: [id])
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  description  String?
+  typeOfUpdate TypeOfUpdate
+  status       Status
+  reviewer     String?
+  projectId    String       @db.ObjectId
+  project      Projects     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId       String       @db.ObjectId
+  user         User         @relation(fields: [userId], references: [id])
+}
+
+enum TypeOfUpdate {
+  Bug
+  Development
+  Enhancement
+  Feature
+  Design
 }
 
 enum Status {
-  done
-  inProgress
-  closed
-  completed
+  Done
+  InProgress
+  Closed
+  Completed
 }

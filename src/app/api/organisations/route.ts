@@ -1,4 +1,3 @@
-
 import prisma from "@/db/prisma";
 import { organisationSchema } from "@/types/org-types";
 import { getUser } from "@/utils/getUser";

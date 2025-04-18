@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
 
   const restrictedRoutes = ["/dashboard"];
   const isRestrictedRoute = restrictedRoutes.some((route) =>
-    req.nextUrl.pathname.startsWith(route)
+    req.nextUrl.pathname.startsWith(route),
   );
 
   if (isRestrictedRoute && !token) {

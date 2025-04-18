@@ -79,7 +79,7 @@ const LocationSelector = ({
 }: // onStateChange,
 LocationSelectorProps) => {
   const [selectedCountry, setSelectedCountry] = useState<CountryProps | null>(
-    null
+    null,
   );
   // const [selectedState, setSelectedState] = useState<StateProps | null>(null);
   const [openCountryDropdown, setOpenCountryDropdown] = useState(false);
@@ -155,7 +155,7 @@ LocationSelectorProps) => {
                           "h-4 w-4",
                           selectedCountry?.id === country.id
                             ? "opacity-100"
-                            : "opacity-0"
+                            : "opacity-0",
                         )}
                       />
                     </CommandItem>

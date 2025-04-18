@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function Page() {
   const { projects, loading, tasks } = useSelector(
-    (root: RootState) => root.org
+    (root: RootState) => root.org,
   );
   const dispath = useDispatch<AppDispatch>();
   const [projectId, setProjectId] = useState<string | null>(null);
@@ -55,7 +55,9 @@ export default function Page() {
           Create a new project to get started
         </p>
         <div className="w-full flex items-center justify-center p-10">
-          <div><QuickCreate /></div>
+          <div>
+            <QuickCreate />
+          </div>
         </div>
       </div>
     );

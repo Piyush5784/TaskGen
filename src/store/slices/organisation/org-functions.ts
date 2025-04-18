@@ -6,7 +6,7 @@ export const fetchAllOrganisations = createAsyncThunk(
   async () => {
     const response = await axios.get("/api/organisations");
     return response.data;
-  }
+  },
 );
 
 export const fetchSelectedOrganisation = createAsyncThunk(
@@ -14,14 +14,14 @@ export const fetchSelectedOrganisation = createAsyncThunk(
   async () => {
     const response = await axios.get("/api/organisations/selectedOrg");
     return response.data;
-  }
+  },
 );
 export const fetchOrgDetails = createAsyncThunk(
   "org/fetchOrgDetails",
   async (orgId: string) => {
     const response = await axios.get(`/api/organisations/${orgId}`);
     return response.data;
-  }
+  },
 );
 
 export const fetchProjects = createAsyncThunk(
@@ -29,7 +29,7 @@ export const fetchProjects = createAsyncThunk(
   async (orgId: string) => {
     const response = await axios.get(`/api/projects?organisationId=${orgId}`);
     return response.data;
-  }
+  },
 );
 
 export const fetchTasks = createAsyncThunk(
@@ -37,7 +37,7 @@ export const fetchTasks = createAsyncThunk(
   async (projectId: string) => {
     const response = await axios.get(`/api/tasks?projectId=${projectId}`);
     return response.data;
-  }
+  },
 );
 
 export async function updateOrganisation(id: String) {

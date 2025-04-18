@@ -9,13 +9,24 @@ const HeroSection = () => {
           Streamline Your Task Management
         </h1>
         <p className="max-w-[700px] text-lg text-white/90 md:text-xl">
-          Efficiently organize projects and tasks for your entire organization. Track deadlines, assign responsibilities, and boost team productivity in one unified platform.
+          Efficiently organize projects and tasks for your entire organization.
+          Track deadlines, assign responsibilities, and boost team productivity
+          in one unified platform.
         </p>
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button asChild size="lg" className="bg-white text-purple-600 hover:bg-white/90">
+          <Button
+            asChild
+            size="lg"
+            className="bg-white text-purple-600 hover:bg-white/90"
+          >
             <Link href="/dashboard">Get Started</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="text-white border-white hover:bg-white/10">
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="text-white border-white hover:bg-white/10"
+          >
             <Link href="/features">Learn More</Link>
           </Button>
         </div>

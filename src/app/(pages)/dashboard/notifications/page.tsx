@@ -106,13 +106,13 @@ const NotificationsPage = () => {
   // Function to delete a notification
   const handleDelete = (id: string) => {
     setNotifications(
-      notifications.filter((notification) => notification.id !== id)
+      notifications.filter((notification) => notification.id !== id),
     );
   };
 
   // Get badge variant based on notification type
   const getBadgeVariant = (
-    type: string
+    type: string,
   ): "default" | "destructive" | "secondary" | "outline" => {
     switch (type) {
       case "info":

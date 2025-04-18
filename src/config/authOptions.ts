@@ -1,4 +1,3 @@
-
 import prisma from "@/db/prisma";
 import { NextAuthOptions } from "next-auth";
 import Github from "next-auth/providers/github";
@@ -21,23 +20,21 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     async signIn({ account, profile }) {
-      if (!profile?.email) throw new Error("No profile")
+      if (!profile?.email) throw new Error("No profile");
       await prisma.user.upsert({
         where: {
-          email: profile.email
+          email: profile.email,
         },
         create: {
           email: profile.email,
           name: profile.name,
-          image: profile.image
-        }
-        ,
+          image: profile.image,
+        },
         update: {
-          email: profile.name
-        }
-
-      },)
-      return true
+          email: profile.name,
+        },
+      });
+      return true;
     },
-  }
+  },
 };

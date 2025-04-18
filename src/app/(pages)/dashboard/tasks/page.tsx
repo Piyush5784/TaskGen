@@ -11,59 +11,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { RootState } from "@/store";
+import { AppDispatch, RootState } from "@/store";
+import { fetchTasks } from "@/store/slices/organisation/org-functions";
 import * as React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Tasks = () => {
   const [open, setOpen] = React.useState(false);
-  const [tasks, setTasks] = React.useState([
-    {
-      id: 1,
-      header: "Task 1",
-      type: "Design",
-      status: "In Progress",
-      target: "10",
-      limit: "20",
-      reviewer: "Assign reviewer",
-    },
-    {
-      id: 2,
-      header: "Table of contents",
-      type: "Table of contents",
-      status: "Done",
-      target: "29",
-      limit: "24",
-      reviewer: "Eddie Lake",
-    },
-  ]);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const [newTask, setNewTask] = React.useState({
-    header: "",
-    type: "New",
-    target: "0",
-    limit: "0",
-  });
 
-  const handleAddTask = () => {
-    setTasks((prevTasks) => [
-      ...prevTasks,
-      {
-        id: tasks.length + 1,
-        header: newTask.header || `Task ${tasks.length + 1}`,
-        type: newTask.type,
-        status: "Not Started",
-        target: newTask.target,
-        limit: newTask.limit,
-        reviewer: "Assign reviewer",
-      },
-    ]);
-    setNewTask({ header: "", type: "New", target: "0", limit: "0" });
-    setOpen(false);
-  };
-  const { selectedProject, projects, loading } = useSelector(
-    (root: RootState) => root.org
+
+  const { selectedProject, projects, loading, tasks } = useSelector(
+    (root: RootState) => root.org,
   );
+
+
+  const [initialTasks, setTasks] = React.useState(tasks);
+  console.log(initialTasks)
+  console.log(tasks)
+
+  React.useEffect(() => {
+    async function fetch() {
+      if (selectedProject && !loading) {
+        await dispatch(fetchTasks(selectedProject?.id));
+      }
+    }
+    fetch();
+  }, [selectedProject]);
+
+
   return (
     <div className="p-4 w-full">
       <div className="flex justify-between items-center mb-4">
@@ -77,8 +54,12 @@ const Tasks = () => {
             <DialogContent className="sm:max-w-[500px]">
               {projects.length === 0 ? (
                 <div className="flex flex-col items-center justify-center p-8 opacity-60 pointer-events-none">
-                  <p className="text-center font-medium mb-2">Create a project first before creating a new task</p>
-                  <p className="text-xs text-muted-foreground text-center">You need at least one project to create tasks</p>
+                  <p className="text-center font-medium mb-2">
+                    Create a project first before creating a new task
+                  </p>
+                  <p className="text-xs text-muted-foreground text-center">
+                    You need at least one project to create tasks
+                  </p>
                 </div>
               ) : (
                 <>
@@ -90,14 +71,16 @@ const Tasks = () => {
                     </div>
                   </DialogHeader>
 
-                  <CreateTaskForm />
+                  <CreateTaskForm selectedProject={selectedProject} />
                 </>
               )}
             </DialogContent>
           </Dialog>
         </div>
       </div>
-      <DataTable data={tasks} />
+      <SelectProject />
+      {/* @ts-ignore */}
+      {selectedProject && !loading && <DataTable data={initialTasks} />}
     </div>
   );
 };

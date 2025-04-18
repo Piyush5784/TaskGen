@@ -19,26 +19,51 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    const org = await prisma.tasks.findFirst({
-      where: {
-        projectId: id,
-        user: {
-          email: user.email,
-        },
-      },
-    });
+    const findProject = await prisma.projects.findUnique({
+      where:{
+        id,
+        userId:user.id
+      }
+    })
 
-    if (!org) {
+    if (!findProject) {
       return NextResponse.json({
         message: "Invalid Project id",
         success: false,
       });
     }
 
+    const tasks = await prisma.tasks.findMany({
+      where: {
+        projectId:findProject.id,
+        userId:user.id
+      },
+    });
+
+    if(tasks.length == 0){
+      return NextResponse.json({
+        message: "Tasks details successfully fetched" ,
+        data: [],
+        success: true,
+      })
+    }
+
+    const formatTasks = tasks.map((task) => 
+      ({
+      id:task.id,
+      header:task.name,
+      status:task.status,
+      reviewer:task.reviewer,
+      type:task.typeOfUpdate,
+      // description:task.description 
+    })
+  )
+
+
     return NextResponse.json({
-      message: "Tasks details successfully fetched",
-      data: org,
-      success: "false",
+      message: "Tasks details successfully fetched" ,
+      data: formatTasks,
+      success: true,
     });
   } catch (error) {
     return NextResponse.json({
@@ -66,24 +91,49 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message, success });
     }
 
-    const {
+    let {
       name,
       description,
-      sectionType,
+      Type,
       status,
       reviewer,
       projectId,
-      project,
-      orgId,
     } = await req.json();
 
-    console.log(req.body);
+    const findProject = await prisma.projects.findUnique({
+      where:{
+        id:projectId,
+        userId:user.id
+      }
+    })
+
+    if(!findProject){
+      return NextResponse.json({
+        message:"Project Not found Invalid Id",
+        success:false
+      })
+    }
+    if(status == "In Progress") status = "InProgress"
+
+   const created =  await prisma.tasks.create({
+      data:{
+        name,
+        status,
+        description,
+        projectId,
+        typeOfUpdate:Type,
+        reviewer,
+        userId:user.id
+      }
+    })
+
     return NextResponse.json({
       message: "Tasks successfully created",
-      data: [],
+      data: created,
       success: "false",
     });
   } catch (error) {
+    console.log(error)
     return NextResponse.json({
       message: "Something went wrong! can't create new Tasks now",
       success: false,

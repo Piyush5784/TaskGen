@@ -16,7 +16,7 @@ export type StepProps = FormItems & {
       price: number;
       id: string;
       title: string;
-    }
+    },
   ];
   goTo: (index: number) => void;
   updateForm?: (fieldToUpdate: Partial<FormItems>) => void;

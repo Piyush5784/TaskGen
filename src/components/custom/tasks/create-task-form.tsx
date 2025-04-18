@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Projects } from "@prisma/client";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -51,21 +52,23 @@ const formSchema = z.object({
   Type: z.enum(taskTypes),
 });
 
-export default function CreateTaskForm() {
+
+export default function CreateTaskForm({ selectedProject }: { selectedProject: Projects | null }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const promise = axios.post("/api/tasks", values);
+      if (!selectedProject) return;
+      const promise = axios.post("/api/tasks", { ...values, projectId: selectedProject.id });
 
       toast.promise(promise, {
-        loading: 'Loading...',
+        loading: "Loading...",
         success: (response: any) => {
           return `${response.data.message}`;
         },
-        error: 'Error',
+        error: "Error",
       });
 
       const res = await promise;
@@ -192,7 +195,9 @@ export default function CreateTaskForm() {
             )}
           />
         </div>
-        <Button type="submit" onClick={() => console.log("click")}>Create</Button>
+        <Button type="submit" onClick={() => console.log("click")}>
+          Create
+        </Button>
       </form>
     </Form>
   );

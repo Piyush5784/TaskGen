@@ -19,7 +19,7 @@ const ProjectInfoForm = ({
   updateForm,
 }: StepProps) => {
   const { organisations, selectedOrg } = useSelector(
-    (root: RootState) => root.org
+    (root: RootState) => root.org,
   );
   return (
     <FormWrapper

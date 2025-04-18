@@ -13,7 +13,7 @@ import { z } from "zod";
 const Page = () => {
   const [open, setOpen] = useState(false);
   const navigate = useRouter();
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
   const onSubmit = async (data: z.infer<typeof organisationSchema>) => {
     const promise = () =>
       new Promise((resolve, reject) => {

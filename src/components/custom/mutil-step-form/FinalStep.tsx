@@ -25,7 +25,7 @@ const FinalStep = ({ yearly, plan, addOns, goTo }: StepProps) => {
 
   const totalAddOnsPrice = filteredAddOns?.reduce(
     (acc, obj) => acc + obj.price,
-    0
+    0,
   );
   console.log(totalAddOnsPrice);
 

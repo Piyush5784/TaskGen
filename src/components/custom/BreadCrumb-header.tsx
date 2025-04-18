@@ -30,7 +30,7 @@ export default function BreadcrumbsHeader() {
               href={href}
               className={cn(
                 "capitalize hover:text-primary",
-                isLast && "text-primary font-medium"
+                isLast && "text-primary font-medium",
               )}
             >
               {decodeURIComponent(segment.replace(/-/g, " "))}
