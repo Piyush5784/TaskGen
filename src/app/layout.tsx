@@ -18,18 +18,18 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Dashboard App",
+  title: "TaskGen",
   description:
     "A modern and responsive dashboard application to manage organizations, projects, and tasks.",
   openGraph: {
-    title: "Dashboard App",
+    title: "TaskGen App",
     description:
       "Manage organizations, projects, and tasks efficiently with our modern dashboard application.",
-    url: "https://your-dashboard-app.com",
+    url: "https://task-gen.netlify.app/",
     siteName: "Dashboard App",
     images: [
       {
-        url: "https://your-dashboard-app.com/og-image.jpg",
+        url: "https://task-gen.netlify.app/image.png",
         width: 1200,
         height: 630,
         alt: "Dashboard App - Manage your projects and tasks",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Dashboard App",
     description:
       "Manage organizations, projects, and tasks efficiently with our modern dashboard application.",
-    images: ["https://your-dashboard-app.com/og-image.jpg"],
+    images: ["https://task-gen.netlify.app/image.png"],
   },
 };
 
