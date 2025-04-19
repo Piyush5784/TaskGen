@@ -22,17 +22,17 @@ export const metadata: Metadata = {
   description:
     "A modern and responsive dashboard application to manage organizations, projects, and tasks.",
   openGraph: {
-    title: "TaskGen App",
+    title: "TaskGen",
     description:
       "Manage organizations, projects, and tasks efficiently with our modern dashboard application.",
     url: "https://task-gen.netlify.app/",
-    siteName: "Dashboard App",
+    siteName: "TaskGen",
     images: [
       {
         url: "https://task-gen.netlify.app/image.png",
         width: 1200,
         height: 630,
-        alt: "Dashboard App - Manage your projects and tasks",
+        alt: "TaskGen - Manage your projects and tasks",
       },
     ],
     locale: "en_US",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dashboard App",
+    title: "TaskGen",
     description:
       "Manage organizations, projects, and tasks efficiently with our modern dashboard application.",
     images: ["https://task-gen.netlify.app/image.png"],
