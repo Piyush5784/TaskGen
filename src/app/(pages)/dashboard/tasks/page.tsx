@@ -42,9 +42,11 @@ const Tasks = () => {
       status: String(task.status),
       reviewer: String(task.reviewer),
       type: String(task.typeOfUpdate),
+      description: String(task.description)
     })) ?? [];
   }, [tasks, selectedProject]);
   const [initialTasks, setTasks] = React.useState<typeof formattedTasks | []>([]);
+
 
 
   React.useEffect(() => {

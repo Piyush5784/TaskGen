@@ -3,6 +3,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { RootState } from "@/store";
 import { useSelector } from "react-redux";
+import Tasks from "./tasks/page";
+import ManualTaskTable from "@/components/custom/tasks/manual-task-table";
 
 export default function Page() {
   const { projects, loading } = useSelector((root: RootState) => root.org);
@@ -92,6 +94,7 @@ export default function Page() {
           </div>
         </div>
       ))}
+
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import SelectProject from "@/components/custom/tasks/select-project";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,7 +24,7 @@ import { useSelector } from "react-redux";
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("general");
 
-  const { organisations, loading, selectedOrg, projects, tasks } = useSelector(
+  const { organisations, loading, selectedOrg, projects, tasks, selectedProject } = useSelector(
     (state: RootState) => state.org,
   );
   const session = useSession();
@@ -52,7 +53,7 @@ const SettingsPage = () => {
                     className={cn(
                       "px-4 py-3 text-left text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-lg",
                       activeTab === item.id &&
-                        "bg-accent text-accent-foreground",
+                      "bg-accent text-accent-foreground",
                     )}
                   >
                     {item.label}
@@ -130,7 +131,8 @@ const SettingsPage = () => {
           {activeTab === "project" && (
             <Card>
               <CardHeader>
-                <CardTitle>Project Settings</CardTitle>
+                <CardTitle className="flex justify-between items-center ">Project Settings
+                  <SelectProject /> </CardTitle>
                 <CardDescription>
                   Manage your project configurations and collaborators
                 </CardDescription>
@@ -144,6 +146,8 @@ const SettingsPage = () => {
                       <Input
                         id="project-name"
                         placeholder="Enter project name"
+
+                        value={selectedProject?.name}
                       />
                     </div>
                     <div className="grid gap-2">
@@ -151,6 +155,7 @@ const SettingsPage = () => {
                       <Input
                         id="project-description"
                         placeholder="Project description"
+                        value={selectedProject?.description || ""}
                       />
                     </div>
                   </div>
@@ -158,7 +163,7 @@ const SettingsPage = () => {
 
                 <Separator />
 
-                <div className="space-y-4">
+                {/* <div className="space-y-4">
                   <h3 className="text-lg font-medium">Visibility</h3>
                   <div className="flex items-center justify-between">
                     <div>
@@ -169,7 +174,7 @@ const SettingsPage = () => {
                     </div>
                     <Switch />
                   </div>
-                </div>
+                </div> */}
               </CardContent>
               <CardFooter>
                 <Button>Save Changes</Button>
@@ -195,6 +200,8 @@ const SettingsPage = () => {
                       <Input
                         id="org-name"
                         placeholder="Enter organization name"
+
+                        value={selectedOrg?.name}
                       />
                     </div>
                     <div className="grid gap-2">
@@ -203,6 +210,8 @@ const SettingsPage = () => {
                         id="org-email"
                         placeholder="contact@example.com"
                         type="email"
+
+                        value={selectedOrg?.email}
                       />
                     </div>
                   </div>

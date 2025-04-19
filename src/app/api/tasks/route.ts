@@ -53,16 +53,6 @@ export async function GET(req: NextRequest) {
     });
   }
 }
-// id          String          @id @default(auto()) @map("_id") @db.ObjectId
-// name        String
-// description String?
-// sectionType String?
-// status      Status
-// reviewer    String?
-// projectId   String          @db.ObjectId
-// project     Projects        @relation(fields: [projectId], references: [id], onDelete: Cascade)
-// userId      String          @db.ObjectId
-// user        User
 
 export async function POST(req: NextRequest) {
   try {
@@ -75,9 +65,10 @@ export async function POST(req: NextRequest) {
     const {
       name,
       description,
-      Type,
+      type,
       status,
       reviewer,
+      taskId,
       projectId,
     } = await req.json();
 
@@ -95,13 +86,34 @@ export async function POST(req: NextRequest) {
       })
     }
     const fixStatus = status == "In Progress" ? "InProgress" : status; 
+
+    if(taskId){
+      await prisma.tasks.update({
+        where:{
+          id:taskId,
+          userId:user.id
+        },
+        data:{
+          name,
+          description,
+          typeOfUpdate:type,
+          status:fixStatus,
+          reviewer
+        }
+      })
+
+      return NextResponse.json({
+        message:"Task updated Successfully",
+        success:true
+      })
+    }
    const created =  await prisma.tasks.create({
       data:{
         name,
         status:fixStatus,
         description,
         projectId,
-        typeOfUpdate:Type,
+        typeOfUpdate:type,
         reviewer,
         userId:user.id
       }

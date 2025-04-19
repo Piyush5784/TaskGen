@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select";
 import { AppDispatch } from "@/store";
 import { fetchTasks } from "@/store/slices/organisation/org-functions";
+import { formSchema, statuses, taskTypes } from "@/types/Form-types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Projects } from "@prisma/client";
 import axios from "axios";
@@ -27,29 +28,6 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import * as z from "zod";
 
-const statuses = ["Done", "Completed", "In Progress", "Closed"] as const;
-const taskTypes = [
-  "Design",
-  "Development",
-  "Feature",
-  "Bug",
-  "Enhancement",
-] as const;
-
-
-
-const formSchema = z.object({
-  name: z.string().min(1).min(3).max(50),
-  description: z
-    .string()
-    .min(1, "Description should be ")
-    .min(3)
-    .max(200)
-    .optional(),
-  status: z.enum(statuses),
-  reviewer: z.string().optional(),
-  Type: z.enum(taskTypes),
-});
 
 
 export default function CreateTaskForm({ selectedProject, onClose }: { selectedProject: Projects | null, onClose: () => void }) {
@@ -171,7 +149,7 @@ export default function CreateTaskForm({ selectedProject, onClose }: { selectedP
 
           <FormField
             control={form.control}
-            name="Type"
+            name="type"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Type</FormLabel>
