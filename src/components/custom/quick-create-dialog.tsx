@@ -5,29 +5,28 @@ import MultiStepForm from "./mutil-step-form";
 import { Button } from "../ui/button";
 
 type prop = {
-  type?: "primary" | "secondary"
-}
+  type?: "primary" | "secondary";
+};
 
 export function QuickCreate({ type }: prop) {
   return (
     <div className="w-full">
       <Dialog>
         <DialogTrigger asChild>
-          {type == "secondary" ?
-            <SidebarMenuButton
-              tooltip="Create Project"
-              className="border mt-1"
-            >
+          {type == "secondary" ? (
+            <SidebarMenuButton tooltip="Create Project" className="border mt-1">
               <PlusCircleIcon />
               <span>Create Project</span>
             </SidebarMenuButton>
-            : <SidebarMenuButton
+          ) : (
+            <SidebarMenuButton
               tooltip="Quick Create"
               className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
               <PlusCircleIcon />
               <span>Quick Create</span>
-            </SidebarMenuButton>}
+            </SidebarMenuButton>
+          )}
         </DialogTrigger>
         <DialogContent className="max-w-full w-1/2 bg-none p-3">
           <MultiStepForm />

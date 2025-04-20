@@ -19,7 +19,7 @@ const SelectProject = () => {
   const dispatch = useDispatch<AppDispatch>();
   const [projectId, setSelectedProjectId] = useState<string | null>(null);
   const { selectedProject, projects, loading } = useSelector(
-    (root: RootState) => root.org,
+    (root: RootState) => root.org
   );
 
   useEffect(() => {

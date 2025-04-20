@@ -21,10 +21,8 @@ const Tasks = () => {
   const [open, setOpen] = React.useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
-
-
   const { selectedProject, projects, loading, tasks } = useSelector(
-    (root: RootState) => root.org,
+    (root: RootState) => root.org
   );
 
   React.useEffect(() => {
@@ -36,29 +34,30 @@ const Tasks = () => {
     fetch();
   }, [selectedProject]);
   const formattedTasks = React.useMemo(() => {
-    return tasks?.map((task) => ({
-      id: task.id,
-      header: task.name,
-      status: String(task.status),
-      reviewer: String(task.reviewer),
-      type: String(task.typeOfUpdate),
-      description: String(task.description)
-    })) ?? [];
+    return (
+      tasks?.map((task) => ({
+        id: task.id,
+        header: task.name,
+        status: String(task.status),
+        reviewer: String(task.reviewer),
+        type: String(task.typeOfUpdate),
+        description: String(task.description),
+      })) ?? []
+    );
   }, [tasks, selectedProject]);
-  const [initialTasks, setTasks] = React.useState<typeof formattedTasks | []>([]);
-
-
+  const [initialTasks, setTasks] = React.useState<typeof formattedTasks | []>(
+    []
+  );
 
   React.useEffect(() => {
     setTasks(formattedTasks);
 
-    console.log("called")
+    console.log("called");
   }, [formattedTasks, selectedProject]);
 
   function closeDialog() {
     setOpen(false);
   }
-
 
   return (
     <div className="p-4 w-full">
@@ -90,7 +89,10 @@ const Tasks = () => {
                     </div>
                   </DialogHeader>
 
-                  <CreateTaskForm onClose={closeDialog} selectedProject={selectedProject} />
+                  <CreateTaskForm
+                    onClose={closeDialog}
+                    selectedProject={selectedProject}
+                  />
                 </>
               )}
             </DialogContent>
@@ -98,7 +100,23 @@ const Tasks = () => {
         </div>
       </div>
       <SelectProject />
-      {selectedProject && <ManualTaskTable isLoading={loading} tasks={initialTasks} />}
+      {projects.length === 0 && (
+        <div className="border rounded-xl h-[75vh] flex items-center justify-center ">
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col items-center justify-center p-8 opacity-60 pointer-events-none ">
+              <p className="text-center font-medium mb-2">
+                Create a project first before creating a new task
+              </p>
+              <p className="text-xs text-muted-foreground text-center">
+                You need at least one project to create tasks
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      {projects.length !== 0 && selectedProject && (
+        <ManualTaskTable isLoading={loading} tasks={initialTasks} />
+      )}
     </div>
   );
 };

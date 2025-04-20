@@ -1,5 +1,6 @@
 "use client";
 
+import CheckOrganisationStatus from "@/components/custom/check-org";
 import SelectProject from "@/components/custom/tasks/select-project";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,9 +25,14 @@ import { useSelector } from "react-redux";
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState("general");
 
-  const { organisations, loading, selectedOrg, projects, tasks, selectedProject } = useSelector(
-    (state: RootState) => state.org,
-  );
+  const {
+    organisations,
+    loading,
+    selectedOrg,
+    projects,
+    tasks,
+    selectedProject,
+  } = useSelector((state: RootState) => state.org);
   const session = useSession();
 
   const { setTheme } = useTheme();
@@ -53,7 +59,7 @@ const SettingsPage = () => {
                     className={cn(
                       "px-4 py-3 text-left text-sm font-medium hover:bg-accent hover:text-accent-foreground rounded-lg",
                       activeTab === item.id &&
-                      "bg-accent text-accent-foreground",
+                        "bg-accent text-accent-foreground"
                     )}
                   >
                     {item.label}
@@ -131,8 +137,10 @@ const SettingsPage = () => {
           {activeTab === "project" && (
             <Card>
               <CardHeader>
-                <CardTitle className="flex justify-between items-center ">Project Settings
-                  <SelectProject /> </CardTitle>
+                <CardTitle className="flex justify-between items-center ">
+                  Project Settings
+                  <SelectProject />{" "}
+                </CardTitle>
                 <CardDescription>
                   Manage your project configurations and collaborators
                 </CardDescription>
@@ -141,12 +149,11 @@ const SettingsPage = () => {
                 <div className="space-y-4">
                   <h3 className="text-lg font-medium">Project Details</h3>
                   <div className="grid gap-4">
-                    <div className="grid gap-2">
+                    <div className="grid gap-2 pt-10">
                       <Label htmlFor="project-name">Project Name</Label>
                       <Input
                         id="project-name"
                         placeholder="Enter project name"
-
                         value={selectedProject?.name}
                       />
                     </div>
@@ -200,7 +207,6 @@ const SettingsPage = () => {
                       <Input
                         id="org-name"
                         placeholder="Enter organization name"
-
                         value={selectedOrg?.name}
                       />
                     </div>
@@ -210,7 +216,6 @@ const SettingsPage = () => {
                         id="org-email"
                         placeholder="contact@example.com"
                         type="email"
-
                         value={selectedOrg?.email}
                       />
                     </div>

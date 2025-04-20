@@ -134,7 +134,7 @@ const orgSlice = createSlice({
       })
       .addCase(
         fetchTasks.fulfilled,
-        (state, action: PayloadAction<{success:boolean; data:Tasks[]}>) => {
+        (state, action: PayloadAction<{ success: boolean; data: Tasks[] }>) => {
           state.loading = false;
           state.tasks = action.payload.data;
         },

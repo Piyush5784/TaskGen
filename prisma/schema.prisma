@@ -14,6 +14,7 @@ model User {
   emailVerified DateTime?
   image         String?
   selectedOrg   String?
+  selectedProjectId String?
   organisations Organisations[]
   projects      Projects[]
   tasks         Tasks[]
@@ -57,7 +58,6 @@ model Projects {
   techStack         String[]
   LiveLink          String?
   RepoLink          String?
-  selectedProjectId String?
   goals             String[]
   organisationId    String        @db.ObjectId
   organisation      Organisations @relation(fields: [organisationId], references: [id], onDelete: Cascade)

@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -28,25 +27,32 @@ import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 import * as z from "zod";
 
-
-
-export default function CreateTaskForm({ selectedProject, onClose }: { selectedProject: Projects | null, onClose: () => void }) {
+export default function CreateTaskForm({
+  selectedProject,
+  onClose,
+}: {
+  selectedProject: Projects | null;
+  onClose: () => void;
+}) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  const dispatch = useDispatch<AppDispatch>()
+  const dispatch = useDispatch<AppDispatch>();
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       if (!selectedProject) return;
-      const promise = axios.post("/api/tasks", { ...values, projectId: selectedProject.id });
+      const promise = axios.post("/api/tasks", {
+        ...values,
+        projectId: selectedProject.id,
+      });
 
       toast.promise(promise, {
         loading: "Loading...",
         success: (response: any) => {
           onClose();
-          dispatch(fetchTasks(selectedProject?.id))
+          dispatch(fetchTasks(selectedProject?.id));
           return `${response.data.message}`;
         },
         error: "Error",

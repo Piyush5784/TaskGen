@@ -5,6 +5,7 @@ import { SiteHeader } from "@/components/custom/side-header";
 import { AppSidebar } from "@/components/custom/sidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import data from "@/lib/data.json";
+import SayHello from "./components/say-hello";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

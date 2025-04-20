@@ -1,4 +1,4 @@
-import {z} from "zod"
+import { z } from "zod";
 
 export type FormItems = {
   projectName: string;
@@ -24,7 +24,6 @@ export type StepProps = FormItems & {
   updateForm?: (fieldToUpdate: Partial<FormItems>) => void;
 };
 
-
 export const statuses = ["Done", "Completed", "In Progress", "Closed"] as const;
 export const taskTypes = [
   "Design",
@@ -33,8 +32,6 @@ export const taskTypes = [
   "Bug",
   "Enhancement",
 ] as const;
-
-
 
 export const formSchema = z.object({
   name: z.string().min(1).min(3).max(50),
