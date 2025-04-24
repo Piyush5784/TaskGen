@@ -1,94 +1,94 @@
 # 🗂️ TaskGen
 
-**TaskGen** is a web platform that helps individuals and teams track and share their project progress in real-time. It enables users to create projects, define milestones, get notified of updates, and manage tasks through a clean dashboard — similar to Trello or Jira.
+**TaskGen** is a modern web-based task and project management platform designed for individuals and teams. It allows users to track progress, define goals, manage todos, and collaborate effectively — inspired by platforms like Trello and Jira.
 
 ---
 
 ## 🚀 Vision
 
-To provide a simple, collaborative, and transparent platform for tracking the lifecycle of any project, from idea to execution.
+To empower teams and individuals with a transparent, efficient, and collaborative way to manage projects from inception to execution.
 
 ---
 
 ## ✨ Features
 
-### ✅ MVP Features
-- User Authentication (Email & Password)
-- Create and manage Projects
-- Add Goals, Todos, Issues, and Pending tasks
-- Multi-organization support
-- Toggle project visibility (Public/Private)
-- Project-based real-time notifications
-- Dashboard with filters and task grouping
-- Role-based access for team members
+### ✅ Core Features (MVP)
+- 🔐 Email/Password Authentication via NextAuth
+- 🧠 Role-based Access Control (Admin, Member, Viewer, Guest)
+- 🗃️ Multi-Organization & Multi-Project Support
+- 🎯 Goals, Todos, Issues, and Pending Tasks per Project
+- 🌐 Public/Private Project Visibility
+- 📥 Real-time Project-Based Notifications *(upcoming)*
+- 🧩 Dashboard with Filtering, Grouping & Project Switching
+- 👥 Invite and Manage Team Members
 
 ---
 
-## 📊 Dashboard
+## 📊 Dashboard Overview
 
-TaskGen provides a simple yet effective dashboard that allows users to:
-- Create projects with detailed descriptions
-- Organize project milestones, goals, and todos
-- Add team members to organizations and assign project roles
-- Filter tasks by status, priority, or due dates
-- Track activity and set reminders
+The TaskGen dashboard offers:
+- Clean project overviews with milestones and task breakdown
+- Visual filters (status, priority, due dates)
+- Organization management & user role assignment
+- Context-aware UI with reminders and flash indicators
+- Command menu for faster task navigation *(via CMDK)*
 
 ---
 
 ## 🔧 Tech Stack
 
-- **Frontend**: Next.js, Tailwind CSS
+### ⚙️ Core Stack
+- **Frontend**: Next.js 14, Tailwind CSS
 - **State Management**: Redux Toolkit
 - **Backend**: Node.js / Express *(planned)*
-- **Auth**: Email/Password Login
+- **Auth**: NextAuth.js with Prisma Adapter
+- **ORM**: Prisma
 - **Database**: PostgreSQL / MongoDB *(planned)*
-- **Notifications**: Email & In-App *(planned)*
+
+### 📦 Notable Libraries & Tools
+- 🧱 UI: Radix UI, Shadcn, Lucide, CMDK
+- 🧑‍🎨 Animations: Framer Motion
+- 🧩 Drag & Drop: DnD Kit
+- 🧹 Styling: Tailwind CSS, clsx, class-variance-authority
+- 📊 Charts: Recharts
+- 📅 Date Utils: date-fns
+- 🧾 Forms: React Hook Form, Zod, @hookform/resolvers
+- 🌙 Theme Support: next-themes
 
 ---
 
-## 🔐 Role-Based Access (Upcoming)
+## 🧑‍🤝‍🧑 Role-Based Access (Upcoming)
 
-- **Admin**: Full access to the org and all its projects
-- **Member**: Manage projects and tasks within the org
-- **Viewer**: Read-only access to view progress
-- **Guest**: Temporary/project-based access
-
----
-
-## 🔔 Notifications (Upcoming)
-
-- Notifications when:
-  - A new project is started
-  - A task is updated
-  - A user is added to a project/org
-  - A task is nearing its due date
+| Role   | Access Level                          |
+|--------|----------------------------------------|
+| Admin  | Full access to org and all projects    |
+| Member | Can manage tasks and projects          |
+| Viewer | Read-only access to org/project data   |
+| Guest  | Temporary/project-specific access only |
 
 ---
 
-## 📝 Pending Tasks
+## 🔔 Notifications (Planned)
 
-- [ ] Add Role-Based Access System
-- [ ] Implement Notification APIs
-- [ ] Auto-complete search functionality
-- [ ] Email & Password login (WIP)
-- [ ] Flash issue when switching between projects/tasks
-- [ ] Project creation form doesn't auto-close
-- [ ] UI/UX enhancements
-- [ ] Set active project/organization selector
-- [ ] Reminder system for pending tasks
-- [ ] Organization and team access control
+Users will receive alerts for:
+- 🚀 New project creation
+- ✏️ Task updates
+- 🧑‍💼 New member added to org/project
+- ⏰ Task deadline approaching
 
 ---
 
 ## 🛠️ Getting Started
 
+Clone the repo and run the app locally:
+
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/your-username/taskgen.git
 cd taskgen
 
 # Install dependencies
-npm install
+pnpm install
 
-# Run the dev server
-npm run dev
+# Start the development server
+pnpm dev
