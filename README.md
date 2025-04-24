@@ -40,10 +40,9 @@ The TaskGen dashboard offers:
 ### ⚙️ Core Stack
 - **Frontend**: Next.js 14, Tailwind CSS
 - **State Management**: Redux Toolkit
-- **Backend**: Node.js / Express *(planned)*
 - **Auth**: NextAuth.js with Prisma Adapter
 - **ORM**: Prisma
-- **Database**: PostgreSQL / MongoDB *(planned)*
+- **Database**: MongoDB
 
 ### 📦 Notable Libraries & Tools
 - 🧱 UI: Radix UI, Shadcn, Lucide, CMDK
